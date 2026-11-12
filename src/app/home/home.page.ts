@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonHeader, IonToolbar, IonTitle, IonContent } from '@ionic/angular';
+import { IonHeader, IonToolbar, IonTitle, IonContent, IonItem, IonList, IonLabel, IonCheckbox} from '@ionic/angular';
 
 import type { Tarefa } from '../models/tarefa';
 
@@ -7,7 +7,8 @@ import type { Tarefa } from '../models/tarefa';
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
-  imports: [IonHeader, IonToolbar, IonTitle, IonContent],
+  imports: [IonHeader, IonToolbar, IonTitle, IonContent, IonItem, IonList, IonLabel, IonCheckbox], 
+  /*cosnegui reproduzir o erro equecendo de importar label, ja fica errado parece que nao carrega*/
 })
 export class HomePage {
   tarefas: Tarefa[] = [

@@ -11,11 +11,15 @@
     </ion-toolbar>
   </ion-header>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>
-      Start with Ionic
-      <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a>
-    </p>
-  </div>
+  <ion-content>
+    <ion-list>
+      @for (tarefa of tarefas; track tarefa.id){
+        <ion-item>
+          <ion-label position="stacked">{{tarefa.id}}</ion-label>
+          <ion-checkbox labelPlacement="start" justify="start" [checked]=tarefa.concluido>{{tarefa.titulo}}</ion-checkbox>
+        </ion-item>
+      }
+    </ion-list>
+  </ion-content>
+  
 </ion-content>
