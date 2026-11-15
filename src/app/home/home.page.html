@@ -1,22 +1,26 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title> Blank </ion-title>
+    <ion-title>Minhas Tarefas</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
+      <ion-title size="large">Minhas Tarefas</ion-title>
     </ion-toolbar>
   </ion-header>
+
+<ion-item>
+  <ion-label>Você tem {{tarefas.length}} tarefas.</ion-label>
+</ion-item>
 
   <ion-content>
     <ion-list>
       @for (tarefa of tarefas; track tarefa.id){
         <ion-item>
           <ion-label position="stacked">{{tarefa.id}}</ion-label>
-          <ion-checkbox labelPlacement="start" justify="start" [checked]=tarefa.concluido>{{tarefa.titulo}}</ion-checkbox>
+          <ion-checkbox labelPlacement="start" justify="start" [checked]="tarefa.concluido">{{tarefa.titulo}}</ion-checkbox>
         </ion-item>
       }
     </ion-list>
