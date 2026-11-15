@@ -12,10 +12,12 @@
   </ion-header>
 
 <ion-item>
-  <ion-label>Você tem {{tarefas.length}} tarefas.</ion-label>
+  <ion-label>@if (tarefas.length>1)
+    {Você tem {{tarefas.length}} tarefas.}
+    @else {Você tem {{tarefas.length}} tarefa}
+  </ion-label>
 </ion-item>
 
-  <ion-content>
     <ion-list>
       @for (tarefa of tarefas; track tarefa.id){
         <ion-item>
@@ -24,6 +26,5 @@
         </ion-item>
       }
     </ion-list>
-  </ion-content>
   
 </ion-content>
