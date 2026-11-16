@@ -11,20 +11,18 @@
     </ion-toolbar>
   </ion-header>
 
-<ion-item>
-  <ion-label>@if (tarefas.length>1)
-    {Você tem {{tarefas.length}} tarefas.}
-    @else {Você tem {{tarefas.length}} tarefa}
-  </ion-label>
-</ion-item>
+  <ion-item>
+    <ion-label
+      >@if (tarefas.length>1) {Você tem {{tarefas.length}} tarefas.} @else {Você tem {{tarefas.length}} tarefa}
+    </ion-label>
+  </ion-item>
 
-    <ion-list>
-      @for (tarefa of tarefas; track tarefa.id){
-        <ion-item>
-          <ion-label position="stacked">{{tarefa.id}}</ion-label>
-          <ion-checkbox labelPlacement="start" justify="start" [checked]="tarefa.concluido">{{tarefa.titulo}}</ion-checkbox>
-        </ion-item>
-      }
-    </ion-list>
-  
+  <ion-list>
+    @for (tarefa of tarefas; track tarefa.id){
+    <ion-item>
+      <ion-label position="stacked">{{tarefa.id}}</ion-label>
+      <ion-checkbox labelPlacement="start" justify="start" [checked]="tarefa.concluido">{{tarefa.titulo}}</ion-checkbox>
+    </ion-item>
+    }
+  </ion-list>
 </ion-content>
