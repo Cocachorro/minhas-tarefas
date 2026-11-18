@@ -79,6 +79,11 @@ export class HomePage {
     }
   }
 
+  get tarefasPendentes(): number {
+    const pendentes = this.tarefas.filter((t) => !t.concluido);
+    return pendentes.length;
+  }
+
   removerTarefa(idTarefa: number): void {
     this.tarefas = this.tarefas.filter((tarefa) => tarefa.id !== idTarefa);
   }

@@ -16,6 +16,10 @@
       >@if (tarefas.length>1) {Você tem {{tarefas.length}} tarefas.}@else if(tarefas.length===0){Você não tem tarefas.}
       @else {Você tem {{tarefas.length}} tarefa.}
     </ion-label>
+    <ion-label>
+      @if (tarefasPendentes<1) {Sem tarefas pendentes.}@else if (tarefasPendentes>1) {Você tem {{tarefasPendentes}}
+      tarefas pendentes.}@else {Você tem {{tarefasPendentes}} tarefa pendente.}
+    </ion-label>
   </ion-item>
 
   <ion-list>
