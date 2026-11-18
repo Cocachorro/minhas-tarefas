@@ -56,15 +56,6 @@ export class HomePage {
 
   novoTitulo: string = '';
 
-  /*buscaId(): number {
-    let contador: number = 0;
-    contador = this.tarefas.map(tarefa =>
-      if(tarefa.id<=contador){
-        return contador++;
-      }else{return tarefa.id++} // TODO: calcular o maior id da lista (reduce)
-    )
-    
-  }*/
   idAtual: number = 3;
 
   adicionar(): void {
@@ -79,6 +70,17 @@ export class HomePage {
       concluido: false,
     });
     this.novoTitulo = '';
+  }
+
+  aoChecar(idTarefa: number, checado: boolean): void {
+    const tarefa = this.tarefas.find((t) => t.id === idTarefa);
+    if (tarefa) {
+      tarefa.concluido = checado;
+    }
+  }
+
+  removerTarefa(idTarefa: number): void {
+    this.tarefas = this.tarefas.filter((tarefa) => tarefa.id !== idTarefa);
   }
 
   constructor() {}

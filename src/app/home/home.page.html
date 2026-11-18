@@ -22,7 +22,15 @@
     @for (tarefa of tarefas; track tarefa.id){
     <ion-item>
       <ion-label position="stacked">{{tarefa.id}}</ion-label>
-      <ion-checkbox labelPlacement="start" justify="start" [checked]="tarefa.concluido">{{tarefa.titulo}}</ion-checkbox>
+      <ion-checkbox
+        labelPlacement="start"
+        justify="start"
+        [checked]="tarefa.concluido"
+        (ionChange)="aoChecar(tarefa.id, $event.detail.checked)"
+        [class.tarefaConcluida]="tarefa.concluido"
+        >{{tarefa.titulo}}</ion-checkbox
+      >
+      <ion-button slot="end" (click)="removerTarefa(tarefa.id)">REMOVER</ion-button>
     </ion-item>
     }
   </ion-list>
