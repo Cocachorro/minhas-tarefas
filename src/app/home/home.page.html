@@ -12,25 +12,27 @@
   </ion-header>
 
   <ion-item>
-    <ion-label
-      >@if (tarefas.length>1) {Você tem {{tarefas.length}} tarefas.}@else if(tarefas.length===0){Você não tem tarefas.}
-      @else {Você tem {{tarefas.length}} tarefa.}
-    </ion-label>
     <ion-label>
-      @if (tarefasPendentes<1) {Sem tarefas pendentes.}@else if (tarefasPendentes>1) {Você tem {{tarefasPendentes}}
-      tarefas pendentes.}@else {Você tem {{tarefasPendentes}} tarefa pendente.}
+      <p>
+        @if (listaTarefas.length>1) {Você tem {{listaTarefas.length}} tarefas.}@else if(listaTarefas.length===0){Você
+        não tem tarefas.} @else {Você tem {{listaTarefas.length}} tarefa.}
+      </p>
+      <p>
+        @if (tarefasPendentes<1) {Sem tarefas pendentes.}@else if (tarefasPendentes>1) {Você tem {{tarefasPendentes}}
+        tarefas pendentes.}@else {Você tem {{tarefasPendentes}} tarefa pendente.}
+      </p>
     </ion-label>
   </ion-item>
 
   <ion-list>
-    @for (tarefa of tarefas; track tarefa.id){
+    @for (tarefa of listaTarefas; track tarefa.id){
     <ion-item>
       <ion-label position="stacked">{{tarefa.id}}</ion-label>
       <ion-checkbox
         labelPlacement="start"
         justify="start"
         [checked]="tarefa.concluido"
-        (ionChange)="aoChecar(tarefa.id, $event.detail.checked)"
+        (ionChange)="checarTarefa(tarefa.id, $event.detail.checked)"
         [class.tarefaConcluida]="tarefa.concluido"
         >{{tarefa.titulo}}</ion-checkbox
       >
@@ -40,7 +42,7 @@
   </ion-list>
 
   <ion-item>
-    <ion-input [(ngModel)]="novoTitulo" placeholder="Digite aqui o novo titulo" (keyup.enter)="adicionar()"></ion-input>
+    <ion-input [(ngModel)]="novoTitulo" placeholder="Digite aqui o novo titulo" (keyup.enter)="addTarefa()"></ion-input>
   </ion-item>
-  <ion-button [disabled]="novoTitulo.trim() === ''" (click)="adicionar()">Adicionar Tarefa</ion-button>
+  <ion-button [disabled]="novoTitulo.trim() === ''" (click)="addTarefa()">Adicionar Tarefa</ion-button>
 </ion-content>
