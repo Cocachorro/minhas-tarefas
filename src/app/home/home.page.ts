@@ -13,7 +13,6 @@ import {
   IonButton,
 } from '@ionic/angular';
 
-import type { Tarefa } from '../models/tarefa';
 import { TarefaService } from '../services/tarefa.service';
 
 @Component({
@@ -40,13 +39,9 @@ export class HomePage {
   private tarefaService = inject(TarefaService);
   novoTitulo: string = '';
 
-  get listaTarefas(): Tarefa[] {
-    return this.tarefaService.listarTarefas();
-  }
+  tarefas = this.tarefaService.listarTarefas;
 
-  get tarefasPendentes(): number {
-    return this.tarefaService.pendentes();
-  }
+  tarefasPendentes = this.tarefaService.pendentes;
 
   addTarefa(): void {
     const registrou: boolean = this.tarefaService.adicionar(this.novoTitulo);
@@ -57,7 +52,7 @@ export class HomePage {
     this.novoTitulo = '';
   }
 
-  checarTarefa(idTarefa: number, estado: boolean): void {
+  checar(idTarefa: number, estado: boolean): void {
     this.tarefaService.checar(idTarefa, estado);
   }
 

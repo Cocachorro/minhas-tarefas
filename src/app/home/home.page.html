@@ -14,25 +14,25 @@
   <ion-item>
     <ion-label>
       <p>
-        @if (listaTarefas.length>1) {Você tem {{listaTarefas.length}} tarefas.}@else if(listaTarefas.length===0){Você
-        não tem tarefas.} @else {Você tem {{listaTarefas.length}} tarefa.}
+        @if(tarefas().length>1) {Você tem {{tarefas().length}} tarefas.}@else if(tarefas().length===0){Você não tem
+        tarefas.} @else {Você tem {{tarefas().length}} tarefa.}
       </p>
       <p>
-        @if (tarefasPendentes<1) {Sem tarefas pendentes.}@else if (tarefasPendentes>1) {Você tem {{tarefasPendentes}}
-        tarefas pendentes.}@else {Você tem {{tarefasPendentes}} tarefa pendente.}
+        @if (tarefasPendentes()<1) {Sem tarefas pendentes.}@else if (tarefasPendentes()>1) {Você tem
+        {{tarefasPendentes()}} tarefas pendentes.}@else {Você tem {{tarefasPendentes()}} tarefa pendente.}
       </p>
     </ion-label>
   </ion-item>
 
   <ion-list>
-    @for (tarefa of listaTarefas; track tarefa.id){
+    @for (tarefa of tarefas(); track tarefa.id){
     <ion-item>
       <ion-label position="stacked">{{tarefa.id}}</ion-label>
       <ion-checkbox
         labelPlacement="start"
         justify="start"
         [checked]="tarefa.concluido"
-        (ionChange)="checarTarefa(tarefa.id, $event.detail.checked)"
+        (ionChange)="checar(tarefa.id, $event.detail.checked)"
         [class.tarefaConcluida]="tarefa.concluido"
         >{{tarefa.titulo}}</ion-checkbox
       >
