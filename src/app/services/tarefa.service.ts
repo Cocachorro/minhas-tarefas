@@ -25,9 +25,26 @@ export class TarefaService {
   ]);
 
   //Variáveis
-  private idAtual: number = 3; //Variável que guarda o ultimo id usado.
+  private idAtual: number = 0; //Variável que guarda o ultimo id usado.
+  private CHAVE_TAREFAS: string = 'minhas_tarefas';
 
   //Exibição
+  private carregarLocal(): void {
+    const dadosLocais = localStorage.getItem(this.CHAVE_TAREFAS);
+    if (dadosLocais !== null) {
+      const dadosObj: Tarefa[] = JSON.parse(dadosLocais);
+      const idLocal = dadosObj.reduce((idMaior, listaLocal) => {
+        if (listaLocal.id > idMaior) {
+          return listaLocal.id;
+        }
+        return idMaior;
+      }, 0);
+
+      this.idAtual = idLocal;
+      this.tarefasSig.set(dadosObj);
+    }
+  }
+
   readonly listarTarefas = this.tarefasSig.asReadonly();
   //Lista todas tareas do Array porém não altera.
 
@@ -39,6 +56,12 @@ export class TarefaService {
   });
 
   //Métodos
+  private salvarLocal(): void {
+    const dados = this.tarefasSig();
+    const dadosString = JSON.stringify(dados);
+    localStorage.setItem(this.CHAVE_TAREFAS, dadosString);
+  }
+
   adicionar(novoTitulo: string): boolean {
     //Verifica se e uma tarefa valida e adiciona depois se for valida.
     const tituloTarefa: string = novoTitulo.trim();
@@ -51,12 +74,14 @@ export class TarefaService {
       concluido: false,
     };
     this.tarefasSig.update((listaAtual) => [...listaAtual, addTarefa]);
+    this.salvarLocal();
     return true;
   }
 
   remover(idTarefa: number): void {
     //Remove uma tarefa do array com filter.
     this.tarefasSig.update((listaAtual) => listaAtual.filter((t) => t.id !== idTarefa));
+    this.salvarLocal();
   }
 
   checar(idTarefa: number, checado: boolean): void {
@@ -69,5 +94,10 @@ export class TarefaService {
         return t;
       }),
     );
+    this.salvarLocal();
+  }
+
+  constructor() {
+    this.carregarLocal();
   }
 }
