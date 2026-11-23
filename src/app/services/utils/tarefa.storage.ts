@@ -4,8 +4,14 @@ import type { Tarefa } from '../../models/tarefa';
 
 @Service()
 export class TarefasStorageService {
-  loadLocal(chave: string): Tarefa[] | null {
+  private esperar(ms: number): Promise<void> {
+    return new Promise((resolve) => {
+      setTimeout(() => resolve(), ms);
+    });
+  }
+  async loadLocal(chave: string): Promise<Tarefa[] | null> {
     //Busca a lista salva se tiver nos arquivos locais.
+    await this.esperar(1000);
     const dadosTxtLocais = localStorage.getItem(chave);
     if (dadosTxtLocais === null) return null;
     try {

@@ -11,6 +11,12 @@
     </ion-toolbar>
   </ion-header>
 
+  @if (carregando()) {
+  <ion-item>
+    <ion-spinner slot="start"></ion-spinner>
+    <ion-label>Carregando...</ion-label>
+  </ion-item>
+  } @else {
   <ion-item>
     <ion-label>
       <p>
@@ -45,4 +51,5 @@
     <ion-input [(ngModel)]="novoTitulo" placeholder="Digite aqui o novo titulo" (keyup.enter)="addTarefa()"></ion-input>
   </ion-item>
   <ion-button [disabled]="novoTitulo.trim() === ''" (click)="addTarefa()">Adicionar Tarefa</ion-button>
+  }
 </ion-content>

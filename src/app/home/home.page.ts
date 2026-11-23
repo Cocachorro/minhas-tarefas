@@ -11,6 +11,7 @@ import {
   IonCheckbox,
   IonInput,
   IonButton,
+  IonSpinner,
 } from '@ionic/angular';
 
 import { TarefaService } from '../services/tarefa.service';
@@ -20,6 +21,7 @@ import { TarefaService } from '../services/tarefa.service';
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
   imports: [
+    IonSpinner,
     IonHeader,
     IonToolbar,
     IonTitle,
@@ -32,14 +34,13 @@ import { TarefaService } from '../services/tarefa.service';
     IonButton,
     FormsModule,
   ],
-  /*cosnegui reproduzir o erro equecendo de importar label, ja fica errado parece que nao carrega*/
-  //✘ [ERROR] NG8002: Can't bind to 'ngModel' since it isn't a known property of 'ion-input'.
 })
 export class HomePage {
   private tarefaService = inject(TarefaService);
   novoTitulo: string = '';
 
   tarefas = this.tarefaService.listarTarefas;
+  carregando = this.tarefaService.carregando;
 
   tarefasPendentes = this.tarefaService.pendentes;
 
