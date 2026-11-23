@@ -54,11 +54,9 @@ export class HomePage {
 
   checar(idTarefa: number, estado: boolean): void {
     this.tarefaService.checar(idTarefa, estado);
-    }
+  }
 
   removerTarefa(idTarefa: number): void {
     this.tarefaService.remover(idTarefa);
   }
-
-  
 }

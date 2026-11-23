@@ -1,6 +1,8 @@
-import { Service, signal, computed } from '@angular/core';
+import { Service, signal, computed, inject } from '@angular/core';
 
 import type { Tarefa } from '../models/tarefa';
+
+import { TarefasStorageService } from './utils/tarefa.storage';
 
 @Service()
 export class TarefaService {
@@ -23,30 +25,11 @@ export class TarefaService {
       concluido: true,
     },
   ]);
-
   //Variáveis
   private idAtual: number = 0; //Variável que guarda o ultimo id usado.
-  private CHAVE_TAREFAS: string = 'minhas_tarefas';
-
-  //Exibição
-  private carregarLocal(): void {
-    const dadosLocais = localStorage.getItem(this.CHAVE_TAREFAS);
-    if (dadosLocais !== null) {
-      const dadosObj: Tarefa[] = JSON.parse(dadosLocais);
-      const idLocal = dadosObj.reduce((idMaior, listaLocal) => {
-        if (listaLocal.id > idMaior) {
-          return listaLocal.id;
-        }
-        return idMaior;
-      }, 0);
-
-      this.idAtual = idLocal;
-      this.tarefasSig.set(dadosObj);
-    }
-  }
-
-  readonly listarTarefas = this.tarefasSig.asReadonly();
-  //Lista todas tareas do Array porém não altera.
+  private readonly CHAVE_TAREFAS: string = 'minhas_tarefas'; //Chave guardar dados no local
+  private tarefaStorage = inject(TarefasStorageService); //acesso a carregar e salvar tarEfas
+  readonly listarTarefas = this.tarefasSig.asReadonly(); //Lista todas tareas do Array porém não altera.
 
   readonly pendentes = computed(() => {
     //Calcula quantas tarefas ainda estão pendentes
@@ -54,13 +37,6 @@ export class TarefaService {
     const qntpendentes = lista.filter((t) => !t.concluido);
     return qntpendentes.length;
   });
-
-  //Métodos
-  private salvarLocal(): void {
-    const dados = this.tarefasSig();
-    const dadosString = JSON.stringify(dados);
-    localStorage.setItem(this.CHAVE_TAREFAS, dadosString);
-  }
 
   adicionar(novoTitulo: string): boolean {
     //Verifica se e uma tarefa valida e adiciona depois se for valida.
@@ -74,14 +50,14 @@ export class TarefaService {
       concluido: false,
     };
     this.tarefasSig.update((listaAtual) => [...listaAtual, addTarefa]);
-    this.salvarLocal();
+    this.tarefaStorage.saveLocal(this.CHAVE_TAREFAS, this.tarefasSig());
     return true;
   }
 
   remover(idTarefa: number): void {
     //Remove uma tarefa do array com filter.
     this.tarefasSig.update((listaAtual) => listaAtual.filter((t) => t.id !== idTarefa));
-    this.salvarLocal();
+    this.tarefaStorage.saveLocal(this.CHAVE_TAREFAS, this.tarefasSig());
   }
 
   checar(idTarefa: number, checado: boolean): void {
@@ -94,10 +70,18 @@ export class TarefaService {
         return t;
       }),
     );
-    this.salvarLocal();
+    this.tarefaStorage.saveLocal(this.CHAVE_TAREFAS, this.tarefasSig());
   }
 
   constructor() {
-    this.carregarLocal();
+    const savedTarefas = this.tarefaStorage.loadLocal(this.CHAVE_TAREFAS); //Tenta buscar a lista
+    if (savedTarefas !== null) {
+      //Verifica se tem algo na lista e se é válida antes de colocar no Signal
+      this.tarefasSig.set(savedTarefas);
+      this.idAtual = this.tarefaStorage.getId(savedTarefas);
+    } else {
+      this.idAtual = 3;
+      this.tarefaStorage.saveLocal(this.CHAVE_TAREFAS, this.tarefasSig());
+    }
   }
 }
