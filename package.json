@@ -16,7 +16,8 @@
     "test": "npm run test:unit && npm run test:e2e",
     "test:unit": "ng test --no-watch",
     "test:unit:watch": "ng test --watch",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "watch:android": "ionic cap run android -l --external"
   },
   "private": true,
   "dependencies": {
