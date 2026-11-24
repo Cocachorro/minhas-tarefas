@@ -12,6 +12,9 @@ import {
   IonInput,
   IonButton,
   IonSpinner,
+  IonItemSliding,
+  IonItemOption,
+  IonItemOptions,
 } from '@ionic/angular';
 
 import { TarefaService } from '../services/tarefa.service';
@@ -21,6 +24,7 @@ import { TarefaService } from '../services/tarefa.service';
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
   imports: [
+    IonItemOptions,
     IonSpinner,
     IonHeader,
     IonToolbar,
@@ -33,6 +37,8 @@ import { TarefaService } from '../services/tarefa.service';
     IonInput,
     IonButton,
     FormsModule,
+    IonItemSliding,
+    IonItemOption,
   ],
 })
 export class HomePage {
