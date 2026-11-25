@@ -74,6 +74,24 @@ export class TarefaService {
     );
     this.tarefaStorage.saveLocal(this.CHAVE_TAREFAS, this.tarefasSig());
   }
+
+  editar(idTarefa: number, novoTitulo: string): boolean {
+    const tituloNovo = novoTitulo.trim();
+    if (tituloNovo === '') {
+      return false;
+    }
+    this.tarefasSig.update((lista) =>
+      lista.map((t) => {
+        if (t.id === idTarefa) {
+          return { ...t, titulo: `${tituloNovo}` };
+        }
+        return t;
+      }),
+    );
+    this.tarefaStorage.saveLocal(this.CHAVE_TAREFAS, this.tarefasSig());
+    return true;
+  }
+
   private async carregarDadosIni(): Promise<void> {
     const savedTarefas = await this.tarefaStorage.loadLocal(this.CHAVE_TAREFAS); //Tenta buscar a lista
     if (savedTarefas !== null) {

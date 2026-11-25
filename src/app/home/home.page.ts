@@ -64,6 +64,39 @@ export class HomePage {
     this.tarefaService.checar(idTarefa, estado);
   }
 
+  async editar(tarefa: Tarefa, itemSliding: IonItemSliding): Promise<void> {
+    const edit = await this.alertController.create({
+      header: 'Editar Tarefa:',
+      message: `${tarefa.id} - ${tarefa.titulo}`,
+      inputs: [
+        {
+          name: 'titulo',
+          type: 'text',
+          value: tarefa.titulo,
+          placeholder: 'Novo titulo',
+        },
+      ],
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          handler: () => itemSliding.close(),
+        },
+        {
+          text: 'Salvar',
+          handler: (dados) => {
+            const editou = this.tarefaService.editar(tarefa.id, dados.titulo);
+            if (editou) {
+              itemSliding.close();
+            }
+            return editou;
+          },
+        },
+      ],
+    });
+    await edit.present();
+  }
+
   async removerCheck(tarefa: Tarefa, itemSliding: IonItemSliding): Promise<void> {
     const alert = await this.alertController.create({
       //Confere se vai apagar mesmo a tarefa
