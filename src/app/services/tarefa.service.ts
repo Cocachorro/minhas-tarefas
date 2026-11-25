@@ -26,12 +26,12 @@ export class TarefaService {
     },
   ]);
   //Variáveis
-  private idAtual: number = 0; //Variável que guarda o ultimo id usado.
+  private tarefaStorage = inject(TarefasStorageService); //acesso a carregar e salvar tarefas
   private readonly CHAVE_TAREFAS: string = 'minhas_tarefas'; //Chave guardar dados no local
-  private tarefaStorage = inject(TarefasStorageService); //acesso a carregar e salvar tarEfas
-  readonly listarTarefas = this.tarefasSig.asReadonly(); //Lista todas tareas do Array porém não altera.
   private carregandoSig = signal<boolean>(true); //Boolean se ja carregou os dados.
+  readonly listarTarefas = this.tarefasSig.asReadonly(); //Lista todas tareas do Array porém não altera.
   readonly carregando = this.carregandoSig.asReadonly(); //Ve como está porem não altera
+  private idAtual: number = 0; //Variável que guarda o ultimo id usado.
 
   readonly pendentes = computed(() => {
     //Calcula quantas tarefas ainda estão pendentes

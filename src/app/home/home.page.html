@@ -33,18 +33,21 @@
 
   <ion-list>
     @for (tarefa of tarefas(); track tarefa.id){
-    <ion-item>
-      <ion-label position="stacked">{{tarefa.id}}</ion-label>
-      <ion-checkbox
-        labelPlacement="start"
-        justify="start"
-        [checked]="tarefa.concluido"
-        (ionChange)="checar(tarefa.id, $event.detail.checked)"
-        [class.tarefaConcluida]="tarefa.concluido"
-        >{{tarefa.titulo}}</ion-checkbox
-      >
-      <ion-button slot="end" (click)="removerTarefa(tarefa.id)">REMOVER</ion-button>
-    </ion-item>
+    <ion-item-sliding #itemSliding>
+      <ion-item>
+        <ion-checkbox
+          labelPlacement="start"
+          [checked]="tarefa.concluido"
+          (ionChange)="checar(tarefa.id, $event.detail.checked)"
+          [class.tarefaConcluida]="tarefa.concluido"
+        >
+          <span style="opacity: 0.5; margin-right: 8px"> {{tarefa.id}} </span> {{tarefa.titulo}}
+        </ion-checkbox>
+      </ion-item>
+      <ion-item-options side="end">
+        <ion-item-option color="danger" (click)="removerCheck(tarefa, itemSliding)">Excluir</ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
     }
   </ion-list>
 
