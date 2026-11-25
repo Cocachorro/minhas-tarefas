@@ -1,5 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { Haptics, ImpactStyle, NotificationType } from '@capacitor/haptics';
 import {
   IonHeader,
   IonToolbar,
@@ -57,11 +58,13 @@ export class HomePage {
       alert('Adicione um titulo válido.');
       return;
     }
+    Haptics.impact({ style: ImpactStyle.Light });
     this.novoTitulo = '';
   }
 
   checar(idTarefa: number, estado: boolean): void {
     this.tarefaService.checar(idTarefa, estado);
+    Haptics.impact({ style: ImpactStyle.Light });
   }
 
   async editar(tarefa: Tarefa, itemSliding: IonItemSliding): Promise<void> {
@@ -88,6 +91,7 @@ export class HomePage {
             const editou = this.tarefaService.editar(tarefa.id, dados.titulo);
             if (editou) {
               itemSliding.close();
+              Haptics.impact({ style: ImpactStyle.Light });
             }
             return editou;
           },
@@ -111,7 +115,10 @@ export class HomePage {
         {
           text: 'Excluir',
           role: 'destructive',
-          handler: () => this.tarefaService.remover(tarefa.id),
+          handler: () => {
+            this.tarefaService.remover(tarefa.id);
+            Haptics.notification({ type: NotificationType.Warning });
+          },
         },
       ],
     });
